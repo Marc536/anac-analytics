@@ -4,3 +4,33 @@ services:
     build: .
     ports:
       - "5000:5000"
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_NAME: ANAC
+      DB_USER: postgres
+      DB_PASSWORD: 1234
+    networks:
+      - app_network
+
+  postgres:
+    image: postgres
+    container_name: postgres_container
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: ANAC
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:
+
+networks:
+  app_network:
+    driver: bridge
