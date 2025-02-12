@@ -10,10 +10,10 @@ class DBManager:
 	def get_connection(self):
 		if not self.conn:
 			self.conn = psycopg2.connect(
-				host=os.getenv('DB_HOST', 'postgres'),
-				database=os.getenv('DB_NAME', 'ANAC'),
-				user=os.getenv('DB_USER', 'postgres'),
-				password=os.getenv('DB_PASSWORD', '1234')
+				host=os.getenv('DB_HOST'),
+				database=os.getenv('DB_NAME'),
+				user=os.getenv('DB_USER'),
+				password=os.getenv('DB_PASSWORD')
 			)
 		return self.conn
 
