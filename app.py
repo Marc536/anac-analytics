@@ -7,6 +7,7 @@ from lib.lib_db_manager import DBManager
 app = Flask(__name__)
 db_manager = DBManager()  # Creating an instance of the DBManager class
 
+
 def get_db_manager():
 	global db_manager
 	if db_manager is None:
@@ -14,14 +15,12 @@ def get_db_manager():
 	
 	return db_manager
 
-@app.route('/')
-def home():
-	return "Hello World!"
 
-@app.route('/users', methods=['GET'])
-def get_users():
-	users = get_db_manager().get_all_users()
+@app.route('/get_anac_statistical', methods=['GET'])
+def get_anac_statistical_data():
+	users = get_db_manager().get_all_table_anac()
 	return jsonify(users)
+
 
 @app.route('/post_anac_statistical', methods=['POST'])
 def post_anac_statistical_data():

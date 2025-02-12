@@ -19,7 +19,7 @@ class DBManager:
 		return self.conn
 
 	# Example of function to get data
-	def get_all_users(self):
+	def get_all_table_anac(self):
 		conn = self.get_connection()
 		cur = conn.cursor()
 		cur.execute('SELECT * FROM anac;')
