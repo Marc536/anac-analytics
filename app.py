@@ -35,5 +35,20 @@ def post_anac_statistical_data():
 			Please check if the file is in the correct format and try again."
 		}), 400
 
+
+@app.route('/post_table_anac_filtered', methods=['POST'])
+def post_table_anac_filtered():
+	try:
+		status = get_db_manager().post_table_anac_filtered()
+		if status == -1:
+			return jsonify({"message": "data not found!"}), 404
+		return jsonify({"message": "CSV uploaded and saved to PostgreSQL successfully!"}), 201
+	except Exception as e:
+		logging.error(f"{e}")
+		return jsonify({"message": "Error uploading the CSV file. \
+			Please check if the file is in the correct format and try again."
+		}), 400
+
+
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=5000)
