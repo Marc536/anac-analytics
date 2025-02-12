@@ -1,6 +1,7 @@
 import psycopg2
 from psycopg2 import sql
 import os
+import io
 
 class DBManager:
 	def __init__(self):
@@ -30,24 +31,18 @@ class DBManager:
 		conn = self.get_connection()
 		cur = conn.cursor()
 
-		# Remove todos os registros antes de inserir novos dados
-		cur.execute("DELETE FROM anac;")
+		# Apagar todos os registros rapidamente e resetar ID
+		cur.execute("TRUNCATE TABLE anac RESTART IDENTITY;")
 
-		# Obtém os nomes das colunas do DataFrame (após o descarte da primeira linha)
-		columns = df.columns.tolist()
+		colunas_csv = df.columns.str.lower().tolist()
 
-		# Prepara os dados em um formato de lista para inserção em massa
-		data = [tuple(row) for _, row in df.iterrows()]
+		# Criar buffer CSV na memória
+		csv_buffer = io.StringIO()
+		df.to_csv(csv_buffer, index=False, header=False, sep=";", na_rep="NULL")  # Sem 'quotechar'
+		csv_buffer.seek(0)
 
-		# Cria a string de colunas dinamicamente
-		col_str = ", ".join(columns)
-		placeholders = ", ".join(["%s"] * len(columns))  # Gerar o mesmo número de placeholders (%s) para cada coluna
-
-		# Inserção em massa usando executemany
-		cur.executemany(f'''
-			INSERT INTO anac ({col_str})
-			VALUES ({placeholders})
-		''', data)
+		# Executar COPY
+		cur.copy_from(csv_buffer, "anac", sep=";", null="NULL", columns=colunas_csv)
 
 		conn.commit()
 		cur.close()
