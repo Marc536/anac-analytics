@@ -21,16 +21,34 @@ class DBManager:
 	def get_all_users(self):
 		conn = self.get_connection()
 		cur = conn.cursor()
-		cur.execute('SELECT * FROM users;')  # Supondo que você tenha uma tabela 'users'
+		cur.execute('SELECT * FROM anac;')  # Supondo que você tenha uma tabela 'users'
 		users = cur.fetchall()
 		cur.close()
 		return users
 
-	# Função para inserir dados (exemplo)
-	def create_user(self, name, email):
+	def post_table_anac(self, df):
 		conn = self.get_connection()
 		cur = conn.cursor()
-		cur.execute('INSERT INTO users (name, email) VALUES (%s, %s)', (name, email))
+
+		# Remove todos os registros antes de inserir novos dados
+		cur.execute("DELETE FROM anac;")
+
+		# Obtém os nomes das colunas do DataFrame (após o descarte da primeira linha)
+		columns = df.columns.tolist()
+
+		# Prepara os dados em um formato de lista para inserção em massa
+		data = [tuple(row) for _, row in df.iterrows()]
+
+		# Cria a string de colunas dinamicamente
+		col_str = ", ".join(columns)
+		placeholders = ", ".join(["%s"] * len(columns))  # Gerar o mesmo número de placeholders (%s) para cada coluna
+
+		# Inserção em massa usando executemany
+		cur.executemany(f'''
+			INSERT INTO anac ({col_str})
+			VALUES ({placeholders})
+		''', data)
+
 		conn.commit()
 		cur.close()
 
