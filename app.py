@@ -5,7 +5,7 @@ from flask import Flask, jsonify, request
 from lib.lib_db_manager import DBManager
 
 app = Flask(__name__)
-db_manager = DBManager()  # Criando uma instância da classe DBManager
+db_manager = DBManager()  # Creating an instance of the DBManager class
 
 def get_db_manager():
 	global db_manager
@@ -20,7 +20,7 @@ def home():
 
 @app.route('/users', methods=['GET'])
 def get_users():
-	users = get_db_manager().get_all_users()  # Usando o método para obter todos os usuários
+	users = get_db_manager().get_all_users()
 	return jsonify(users)
 
 @app.route('/post_anac_statistical', methods=['POST'])

@@ -7,7 +7,7 @@ class DBManager:
 	def __init__(self):
 		self.conn = None
 
-	# Conexão com o banco de dados
+	# Database connection
 	def get_connection(self):
 		if not self.conn:
 			self.conn = psycopg2.connect(
@@ -18,11 +18,11 @@ class DBManager:
 			)
 		return self.conn
 
-	# Exemplo de função para obter dados
+	# Example of function to get data
 	def get_all_users(self):
 		conn = self.get_connection()
 		cur = conn.cursor()
-		cur.execute('SELECT * FROM anac;')  # Supondo que você tenha uma tabela 'users'
+		cur.execute('SELECT * FROM anac;')
 		users = cur.fetchall()
 		cur.close()
 		return users
@@ -31,23 +31,23 @@ class DBManager:
 		conn = self.get_connection()
 		cur = conn.cursor()
 
-		# Apagar todos os registros rapidamente e resetar ID
+		# Quickly delete all records and reset ID
 		cur.execute("TRUNCATE TABLE anac RESTART IDENTITY;")
 
 		colunas_csv = df.columns.str.lower().tolist()
 
-		# Criar buffer CSV na memória
+		# Create CSV buffer in memory
 		csv_buffer = io.StringIO()
-		df.to_csv(csv_buffer, index=False, header=False, sep=";", na_rep="NULL")  # Sem 'quotechar'
+		df.to_csv(csv_buffer, index=False, header=False, sep=";", na_rep="NULL")
 		csv_buffer.seek(0)
 
-		# Executar COPY
+		# Save data in the database
 		cur.copy_from(csv_buffer, "anac", sep=";", null="NULL", columns=colunas_csv)
 
 		conn.commit()
 		cur.close()
 
-	# Fechar a conexão
+	# Close the connection
 	def close_connection(self):
 		if self.conn:
 			self.conn.close()
