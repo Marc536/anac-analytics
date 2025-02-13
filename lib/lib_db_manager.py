@@ -114,6 +114,46 @@ class DBManager:
 		return results, total_pages, page
 
 
+	def verify_user_password(self, name, password):
+		conn = self.get_connection()
+		cur = conn.cursor()
+		
+		query = "SELECT password, hash FROM users WHERE name = %s"
+		cur.execute(query, (name,))
+		
+		result = cur.fetchone()
+		
+		if result is None:
+			cur.close()
+			return False
+		
+		stored_password, stored_hash = result
+		
+		if password == stored_password:
+			cur.close()
+			return stored_hash
+		else:
+			cur.close()
+			return False
+
+
+	def verify_hash(self, hash):
+		conn = self.get_connection()
+		cur = conn.cursor()
+		
+		query = "SELECT hash FROM users WHERE hash = %s"
+		cur.execute(query, (hash,))
+		
+		result = cur.fetchone()
+		
+		if result is None:
+			cur.close()
+			return False
+		
+		cur.close()
+		return True
+
+
 	# Close the connection
 	def close_connection(self):
 		if self.conn:

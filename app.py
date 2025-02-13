@@ -17,9 +17,38 @@ def get_db_manager():
 	return db_manager
 
 
+def hash_check(headers):
+	status = None
+	hash = headers.get('Authorization')
+	if not hash or not db_manager.verify_hash(hash):
+		status = jsonify({"error": "Invalid or missing hash."}), 401
+	return status
+
+
+@app.route('/login', methods=['POST'])
+def login():
+	data = request.get_json()
+
+	if not data or 'name' not in data or 'password' not in data:
+		return jsonify({"error": "Name and password are required."}), 400
+
+	name = data['name']
+	password = data['password']
+
+	hash = db_manager.verify_user_password(name, password)
+	if hash:
+		return jsonify({"hash": hash}), 200
+	else:
+		return jsonify({"error": "Invalid username or password."}), 401
+
+
 @app.route('/post_anac_statistical', methods=['POST'])
 def post_anac_statistical_data():
 	try:
+		status = hash_check(request.headers)
+		if status is not None:
+			return status
+
 		file = request.files['file']
 		df = pd.read_csv(file.stream, delimiter=';', skiprows=1)
 		get_db_manager().post_table_anac(df)
@@ -34,6 +63,10 @@ def post_anac_statistical_data():
 @app.route('/post_table_anac_filtered', methods=['POST'])
 def post_table_anac_filtered():
 	try:
+		status = hash_check(request.headers)
+		if status is not None:
+			return status
+
 		status = get_db_manager().post_table_anac_filtered()
 		if status == -1:
 			return jsonify({"message": "data not found!"}), 404
@@ -47,6 +80,10 @@ def post_table_anac_filtered():
 
 @app.route('/get_table_anac_filtered', methods=['GET'])
 def get_table_anac_filtered():
+	status = hash_check(request.headers)
+	if status is not None:
+		return status
+
 	mercado = request.args.get('mercado')
 	ano_inicio = request.args.get('ano_inicio')
 	mes_inicio = request.args.get('mes_inicio')
