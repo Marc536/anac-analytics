@@ -71,9 +71,9 @@ class DBManager:
 		SELECT 
 			"ano",
 			"mes",
-			-- Concatenate aeroporto_de_origem_nome and aeroporto_de_destino_nome in alphabetical order
-			LEAST("aeroporto_de_origem_nome", "aeroporto_de_destino_nome") || ' - ' ||
-			GREATEST("aeroporto_de_origem_nome", "aeroporto_de_destino_nome") AS "mercado",
+			-- Concatenate aeroporto_de_origem_sigla and aeroporto_de_destino_sigla in alphabetical order
+			LEAST("aeroporto_de_origem_sigla", "aeroporto_de_destino_sigla") ||
+			GREATEST("aeroporto_de_origem_sigla", "aeroporto_de_destino_sigla") AS "mercado",
 			"rpk"
 		FROM anac
 		WHERE "empresa_sigla" = 'GLO'
