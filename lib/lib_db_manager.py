@@ -18,15 +18,6 @@ class DBManager:
 			)
 		return self.conn
 
-	# Example of function to get data
-	def get_all_table_anac(self):
-		conn = self.get_connection()
-		cur = conn.cursor()
-		cur.execute('SELECT * FROM anac;')
-		users = cur.fetchall()
-		cur.close()
-		return users
-
 	def post_table_anac(self, df):
 		conn = self.get_connection()
 		cur = conn.cursor()
@@ -85,6 +76,43 @@ class DBManager:
 		# Commit and close cursor
 		conn.commit()
 		cur.close()
+
+	def get_filtered_anac_range(self, ano_inicio=None, mes_inicio=None, ano_fim=None, mes_fim=None, mercado=None, limit=10, page=1):
+		conn = self.get_connection()
+		cur = conn.cursor()
+		
+		# Building the query with dynamic filters
+		query = "SELECT ano, mes, mercado, rpk FROM anac_filtered WHERE 1=1"
+		params = []
+		
+		if ano_inicio and mes_inicio and ano_fim and mes_fim:
+			query += " AND (ano, mes) BETWEEN (%s, %s) AND (%s, %s)"
+			params.extend([ano_inicio, mes_inicio, ano_fim, mes_fim])
+		
+		if mercado:
+			query += " AND mercado = %s"
+			params.append(mercado)
+		
+		# Total record count
+		count_query = f"SELECT COUNT(*) FROM ({query}) AS count_query"
+		cur.execute(count_query, params)
+		total_records = cur.fetchone()[0]
+		
+		# Calculation of the total number of pages
+		total_pages = (total_records // limit) + (1 if total_records % limit > 0 else 0)
+		
+		# Adds pagination
+		offset = (page - 1) * limit
+		query += " ORDER BY ano, mes LIMIT %s OFFSET %s"
+		params.extend([limit, offset])
+		
+		cur.execute(query, params)
+		results = cur.fetchall()
+		
+		cur.close()
+		
+		return results, total_pages, page
+
 
 	# Close the connection
 	def close_connection(self):
