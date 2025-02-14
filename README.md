@@ -26,6 +26,8 @@ A aplicação está hospedada em uma VM no Google Cloud Platform (GCP) com o seg
 - **Backend Flask:** Porta `5000`
 - **Frontend Vue.js:** Porta `8080`
 
+Para acessar a VM, utilize a seguinte senha: **'pai amado'**.
+
 ## Rotas da API
 
 A API possui os seguintes endpoints:
