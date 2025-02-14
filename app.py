@@ -2,10 +2,14 @@ import logging
 import pandas as pd
 import re
 
+from flask_cors import CORS 
 from flask import Flask, jsonify, request
 from lib.lib_db_manager import DBManager
 
 app = Flask(__name__)
+
+CORS(app)
+
 db_manager = DBManager()  # Creating an instance of the DBManager class
 
 
