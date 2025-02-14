@@ -2,14 +2,17 @@
     <div class="login">
       <h2>Login</h2>
       <form @submit.prevent="handleLogin">
+        <br>
         <div>
           <label for="username">Username</label>
-          <input type="text" id="username" v-model="username" required />
+          <input type="text" id="username" v-model="username" required class="custom-input" />
         </div>
+        <br>
         <div>
           <label for="password">Password</label>
-          <input type="password" id="password" v-model="password" required />
+          <input type="password" id="password" v-model="password" required class="custom-input" />
         </div>
+        <br>
         <button type="submit">Login</button>
       </form>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
@@ -86,6 +89,15 @@
   .error {
     color: red;
     margin-top: 10px;
+  }
+  .custom-input {
+    width: 75%;
+    padding: 10px;
+    border: 2px solid #1976d2; /* Cor do contorno */
+    border-radius: 5px; /* Arredondamento das bordas */
+    background-color: #e3f2fd; /* Cor de fundo */
+    box-sizing: border-box;
+    margin-left: 8px;
   }
   </style>
   
