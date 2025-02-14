@@ -1,16 +1,18 @@
 version: "3"
 services:
   ui:
-    build: ./ui
+    build:
+      context: ./ui
     ports:
       - "8080:8080"
     volumes:
       - ./ui:/app
-      - /app/node_modules
     stdin_open: true
     tty: true
     depends_on:
       - flask_app
+    networks:
+      - app_network
   flask_app:
     build: .
     ports:
