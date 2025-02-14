@@ -32,29 +32,30 @@
       </div>
     </div>
 
-    <Chart
-      :size="{ width: 800, height: 420 }"
-      :data="chartData"
-      :margin="margin"
-      :direction="direction"
-      :axis="axis">
+    <div class="chart-container">
+      <Chart
+        :size="{ width: graphicWidth, height: 420 }"
+        :data="chartData"
+        :margin="margin"
+        :direction="direction"
+        :axis="axis"
+      >
+        <template #layers>
+          <Grid strokeDasharray="2,2" />
+          <Line :dataKeys="['date', 'rpk']" />
+        </template>
 
-      <template #layers>
-        <Grid strokeDasharray="2,2" />
-        <Line :dataKeys="['date', 'rpk']"/>
-      </template>
-
-      <template #widgets>
-        <Tooltip
-          borderColor="#48CAE4"
-          :config="{
-            date: { color: '#0077b6' },
-            rpk: { color: '#90e0ef' }
-          }"
-        />
-      </template>
-
-    </Chart>
+        <template #widgets>
+          <Tooltip
+            borderColor="#48CAE4"
+            :config="{
+              date: { color: '#0077b6' },
+              rpk: { color: '#90e0ef' }
+            }"
+          />
+        </template>
+      </Chart>
+    </div>
 
     <div v-if="chartData.length > 0" style="margin-left: 500px">
       Page:
@@ -83,6 +84,7 @@ export default defineComponent({
   components: { Chart, Grid, Line },
   data() {
     return {
+      graphicWidth: 800,
       errorMessage: "",
       anoInicio: "2000",
       mesInicio: "1",
@@ -114,6 +116,21 @@ export default defineComponent({
         }
       }
     };
+  },
+  watch: {
+    qtdVoos(newValue, oldValue) {
+      let newCont = Math.trunc( newValue / 30 );
+      if (newCont >= 1) {
+        console.log(newCont)
+        this.graphicWidth = this.graphicWidth + 400
+      }
+      if (oldValue > newValue) {
+        this.graphicWidth = this.graphicWidth - 400
+      }
+      if (newValue <= 10) {
+        this.graphicWidth = 800
+      }
+    }
   },
   mounted() {
     this.hash = localStorage.getItem("hash")
@@ -166,7 +183,6 @@ export default defineComponent({
       .then((response) => {
         if (response.status === 200) {
           if (Number.isFinite(response.data.total_pages)) {
-            console.log(response.data.total_pages)
             this.totalPage = response.data.total_pages
           }
           const rawData = response.data.data;
@@ -178,7 +194,6 @@ export default defineComponent({
                 rpk: isNaN(rpkValue) ? 0 : rpkValue
               };
             });
-            console.log(this.chartData);
           });
         } else {
           this.errorMessage = 'Entrada inválida. Verifique os campos e tente novamente.';
@@ -254,5 +269,10 @@ export default defineComponent({
   border-radius: 5px;
   background-color: #e3f2fd;
   box-sizing: border-box;
+}
+.chart-container {
+  width: 100%; /* Garante que o container ocupe todo o espaço disponível */
+  overflow-x: auto; /* Adiciona rolagem horizontal quando necessário */
+  white-space: nowrap; /* Evita que o conteúdo quebre */
 }
 </style>
