@@ -62,8 +62,8 @@
       <button style="margin-left: 10px" @click="goToLeft">⬅️</button>
       <button style="margin-left: 10px; margin-right: 50px" @click="goToRight">➡️</button>
       Zoom:
-      <button style="margin-left: 10px" @click="goToUp">➕</button>
-      <button style="margin-left: 10px" @click="goToDown">➖</button>
+      <button style="margin-left: 10px" @click="goToUp">➖</button>
+      <button style="margin-left: 10px" @click="goToDown">➕</button>
     </div>
 
     <button @click="goToLogin" class="logout-button">Logout</button>
