@@ -82,3 +82,79 @@ A API possui os seguintes endpoints:
 
 Este projeto foi desenvolvido para demonstrar habilidades no uso de Flask, Vue.js, PostgreSQL e Docker, além da manipulação de dados estatísticos da ANAC. Ele permite a visualização de dados de transporte aéreo de maneira filtrada e interativa.
 
+---
+
+### **Nota Adicional - Tabelas no PostgreSQL**
+
+Após rodar a aplicação, é necessário criar as seguintes tabelas manualmente no banco de dados PostgreSQL usando o **pgAdmin** ou o comando **psql**:
+
+1. **Tabela ANAC**
+
+```sql
+CREATE TABLE ANAC (
+    id SERIAL PRIMARY KEY,
+    EMPRESA_SIGLA VARCHAR(100),
+    EMPRESA_NOME VARCHAR(100),
+    EMPRESA_NACIONALIDADE VARCHAR(100),
+    ANO VARCHAR(100),
+    MES VARCHAR(100),
+    AEROPORTO_DE_ORIGEM_SIGLA VARCHAR(100),
+    AEROPORTO_DE_ORIGEM_NOME VARCHAR(100),
+    AEROPORTO_DE_ORIGEM_UF VARCHAR(100),
+    AEROPORTO_DE_ORIGEM_REGIAO VARCHAR(100),
+    AEROPORTO_DE_ORIGEM_PAIS VARCHAR(100),
+    AEROPORTO_DE_ORIGEM_CONTINENTE VARCHAR(100),
+    AEROPORTO_DE_DESTINO_SIGLA VARCHAR(100),
+    AEROPORTO_DE_DESTINO_NOME VARCHAR(100),
+    AEROPORTO_DE_DESTINO_UF VARCHAR(100),
+    AEROPORTO_DE_DESTINO_REGIAO VARCHAR(100),
+    AEROPORTO_DE_DESTINO_PAIS VARCHAR(100),
+    AEROPORTO_DE_DESTINO_CONTINENTE VARCHAR(100),
+    NATUREZA VARCHAR(100),
+    GRUPO_DE_VOO VARCHAR(100),
+    PASSAGEIROS_PAGOS VARCHAR(100),
+    PASSAGEIROS_GRATIS VARCHAR(100),
+    CARGA_PAGA_KG VARCHAR(100),
+    CARGA_GRATIS_KG VARCHAR(100),
+    CORREIO_KG VARCHAR(100),
+    ASK VARCHAR(100),
+    RPK VARCHAR(100),
+    ATK VARCHAR(100),
+    RTK VARCHAR(100),
+    COMBUSTIVEL_LITROS VARCHAR(100),
+    DISTANCIA_VOADA_KM VARCHAR(100),
+    DECOLAGENS VARCHAR(100),
+    CARGA_PAGA_KM VARCHAR(100),
+    CARGA_GRATIS_KM VARCHAR(100),
+    CORREIO_KM VARCHAR(100),
+    ASSENTOS VARCHAR(100),
+    PAYLOAD VARCHAR(100),
+    HORAS_VOADAS VARCHAR(100),
+    BAGAGEM_KG VARCHAR(100)
+);
+```
+
+### **Nota Adicional - Tabelas no PostgreSQL**
+
+Após rodar a aplicação, é necessário criar as seguintes tabelas manualmente no banco de dados PostgreSQL usando o **pgAdmin** ou o comando **psql**:
+
+2. **Tabela USERS**
+
+```sql
+CREATE TABLE USERS (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    password VARCHAR(100),
+    hash TEXT
+);
+```
+### Inserção de Usuário
+
+Após a criação da tabela, você precisa inserir pelo menos um usuário na tabela para que a autenticação funcione. O exemplo a seguir mostra como inserir um usuário com o nome "root" e a senha "root#":
+
+```sql
+INSERT INTO USERS (name, password, hash) 
+VALUES ('root', 'root#', 'HASH_AQUI');
+```
+
+Nota: Substitua 'HASH_AQUI' pelo valor do hash gerado para a senha.
