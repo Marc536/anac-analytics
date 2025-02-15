@@ -134,10 +134,6 @@ CREATE TABLE ANAC (
 );
 ```
 
-### **Nota Adicional - Tabelas no PostgreSQL**
-
-Após rodar a aplicação, é necessário criar as seguintes tabelas manualmente no banco de dados PostgreSQL usando o **pgAdmin** ou o comando **psql**:
-
 2. **Tabela USERS**
 
 ```sql
