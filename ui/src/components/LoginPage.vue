@@ -21,10 +21,8 @@
   
   <script>
   import axios from 'axios'
+  import { API_CONFIG } from '@/config/config'
 
-  export const IP = `localhost`
-  export const API_PORT = `5000`
-  export const PROTOCOL = `http`
   export default {
     data() {
       return {
@@ -35,7 +33,7 @@
     },
     methods: {
       postLogin (name, password) {
-        let url = `${PROTOCOL}://${IP}:${API_PORT}/login`
+        let url = `${API_CONFIG.PROTOCOL}://${API_CONFIG.IP}:${API_CONFIG.API_PORT}/login`
         return axios.post(url, {
           name: name,
           password: password,

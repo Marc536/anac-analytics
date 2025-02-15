@@ -72,12 +72,9 @@
 
 <script>
 import axios from "axios";
+import { API_CONFIG } from '@/config/config'
 import { defineComponent, nextTick } from "vue";
 import { Chart, Grid, Line } from 'vue3-charts'
-
-export const IP = `localhost`
-export const API_PORT = `5000`
-export const PROTOCOL = `http`
 
 export default defineComponent({
   name: "GraphicComponent",
@@ -164,7 +161,7 @@ export default defineComponent({
       }
     },
     getTableAnacFiltered () {
-      let url = `${PROTOCOL}://${IP}:${API_PORT}/get_table_anac_filtered`
+      let url = `${API_CONFIG.PROTOCOL}://${API_CONFIG.IP}:${API_CONFIG.API_PORT}/get_table_anac_filtered`
         return axios.get(url, {
           params: {
             ano_inicio: this.anoInicio,
