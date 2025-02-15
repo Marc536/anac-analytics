@@ -78,6 +78,28 @@ A API possui os seguintes endpoints:
    - **Login:** `http://34.30.225.223:8080/`
    - **Gráfico:** `http://34.30.225.223:8080/graphic`
 
+## **Importante: Configuração do Arquivo `config.js`**
+
+Antes de rodar a aplicação, é necessário configurar o arquivo `config.js` para que a comunicação entre o frontend (Vue.js) e o backend (Flask) funcione corretamente.
+
+### Passos para configurar:
+
+1. Abra o arquivo `config.js` no diretório do frontend (Vue.js).
+2. Altere as variáveis `IP`, `API_PORT`, `PROTOCOL` conforme necessário:
+   - `IP`: O endereço IP do seu servidor (pode ser `localhost` ou o IP da VM, por exemplo).
+   - `API_PORT`: A porta do backend Flask (normalmente `5000`).
+   - `PROTOCOL`: O protocolo a ser utilizado (geralmente `http` ou `https`).
+   
+### Exemplo de configuração:
+
+```javascript
+export const IP = 'localhost';  // Ou o IP da sua VM
+export const API_PORT = '5000';  // A porta do Flask
+export const PROTOCOL = 'http';  // Ou 'https', se necessário
+```
+
+Após realizar essa modificação, salve o arquivo e inicie novamente as três etapas acima.
+
 ## Considerações Finais
 
 Este projeto foi desenvolvido para demonstrar habilidades no uso de Flask, Vue.js, PostgreSQL e Docker, além da manipulação de dados estatísticos da ANAC. Ele permite a visualização de dados de transporte aéreo de maneira filtrada e interativa.
