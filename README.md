@@ -20,13 +20,16 @@ O projeto está dividido em três containers Docker:
 
 ## Endereços e Portas
 
-A aplicação está hospedada em uma VM no Google Cloud Platform (GCP) com o seguinte IP: `34.30.225.223`.
+A aplicação pode ser acessada de duas formas:
 
-- **PostgreSQL:** Porta `5432`
-- **Backend Flask:** Porta `5000`
-- **Frontend Vue.js:** Porta `8080`
+1. **Via VM no Google Cloud Platform (GCP):**
+   - **Endereço IP:** `34.30.225.223`
+   - **Frontend (Vue.js):** `http://34.30.225.223:8080/`
+   - **Backend Flask:** Porta `5000`
 
-Para acessar a VM, utilize a seguinte senha: **'pai amado'**.
+2. **Via ngrok (caso a VM esteja indisponível):**
+   - **URL:** [https://3077-2804-7f0-b7c1-30c3-7c6f-1c57-77f2-7b9f.ngrok-free.app/](https://3077-2804-7f0-b7c1-30c3-7c6f-1c57-77f2-7b9f.ngrok-free.app/)
+   - **Observação:** Este link só estará disponível durante o horário comercial.
 
 ## Rotas da API
 
@@ -61,7 +64,7 @@ A API possui os seguintes endpoints:
 - **Filtragem de Dados:** Selecione os voos com base nos critérios especificados.
 - **Gráfico Interativo:** Apresenta o RPK ao longo do tempo.
 
-## Como Executar
+## Como Executar (para rodar sua própria instância)
 
 1. **Clone o repositório:**
    ```bash
@@ -75,8 +78,8 @@ A API possui os seguintes endpoints:
    ```
 
 3. **Acesse a aplicação:**
-   - **Login:** `http://34.30.225.223:8080/`
-   - **Gráfico:** `http://34.30.225.223:8080/graphic`
+   - **Login:** `http://<IP_DA_APLICACAO>:8080/`
+   - **Gráfico:** `http://<IP_DA_APLICACAO>:8080/graphic`
 
 ## **Importante: Configuração do Arquivo `config.js`**
 
