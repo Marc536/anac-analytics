@@ -28,7 +28,7 @@ A aplicação pode ser acessada de duas formas:
    - **Backend Flask:** Porta `5000`
 
 2. **Via ngrok (caso a VM esteja indisponível):**
-   - **URL:** [https://3077-2804-7f0-b7c1-30c3-7c6f-1c57-77f2-7b9f.ngrok-free.app/](https://3077-2804-7f0-b7c1-30c3-7c6f-1c57-77f2-7b9f.ngrok-free.app/)
+   - **URL:** [https://anac.ngrok.app](https://anac.ngrok.app)
    - **Observação:** Este link só estará disponível durante o horário comercial.
 
 ## Rotas da API
