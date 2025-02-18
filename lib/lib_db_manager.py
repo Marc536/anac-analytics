@@ -60,8 +60,8 @@ class DBManager:
 		create_table_sql = """
 		CREATE TABLE anac_filtered AS
 		SELECT 
-			"ano",
-			"mes",
+			CAST("ano" AS INTEGER) AS "ano",  -- Casting "ano" to INTEGER
+			CAST("mes" AS INTEGER) AS "mes",  -- Casting "mes" to INTEGER
 			-- Concatenate aeroporto_de_origem_sigla and aeroporto_de_destino_sigla in alphabetical order
 			LEAST("aeroporto_de_origem_sigla", "aeroporto_de_destino_sigla") ||
 			GREATEST("aeroporto_de_origem_sigla", "aeroporto_de_destino_sigla") AS "mercado",
