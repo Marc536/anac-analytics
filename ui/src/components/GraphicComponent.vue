@@ -187,7 +187,7 @@ export default defineComponent({
             this.chartData = rawData.map(item => {
               const rpkValue = parseFloat(item[3]);
               return {
-                date: `${item[1].padStart(2, '0')}/${item[0]}`,
+                date: `${item[1].toString().padStart(2, '0')}/${item[0].toString()}`,
                 rpk: isNaN(rpkValue) ? 0 : rpkValue
               };
             });
