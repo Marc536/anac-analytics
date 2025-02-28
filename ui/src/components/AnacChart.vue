@@ -49,7 +49,20 @@ export default {
               display: false // Remove a legenda (logo "RPK")
             },
             tooltip: {
-              enabled: true // Permite que o tooltip funcione, se necessário
+              enabled: true, // Habilita o tooltip
+              mode: 'index', // Exibe informações de todos os pontos na linha onde o mouse está
+              intersect: false, // Exibe o tooltip mesmo quando o mouse está em uma linha, não apenas nos pontos
+              callbacks: {
+                // Personalize o conteúdo do tooltip
+                title: (tooltipItems) => {
+                  // Exibe a data no título
+                  return tooltipItems[0].label;
+                },
+                label: (tooltipItem) => {
+                  // Exibe o valor do rpk no tooltip
+                  return `RPK: ${tooltipItem.raw.toFixed(2)}`; // Mostra o valor formatado
+                }
+              }
             }
           }
         }
