@@ -27,37 +27,16 @@
       <br>
       <br>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-      <div v-if="chartData.length > 0">
+      <div>
         Gráfico RPK
       </div>
     </div>
 
     <div class="chart-container">
-      <Chart
-        :size="{ width: graphicWidth, height: 420 }"
-        :data="chartData"
-        :margin="margin"
-        :direction="direction"
-        :axis="axis"
-      >
-        <template #layers>
-          <Grid strokeDasharray="2,2" />
-          <Line :dataKeys="['date', 'rpk']" />
-        </template>
-
-        <template #widgets>
-          <Tooltip
-            borderColor="#48CAE4"
-            :config="{
-              date: { color: '#0077b6' },
-              rpk: { color: '#90e0ef' }
-            }"
-          />
-        </template>
-      </Chart>
+      <AnacChart :chartData="chartData" />
     </div>
 
-    <div v-if="chartData.length > 0" style="margin-left: 500px">
+    <div style="margin-left: 1500px">
       Page:
       <button style="margin-left: 10px" @click="goToLeft">⬅️</button>
       <button style="margin-left: 10px; margin-right: 50px" @click="goToRight">➡️</button>
@@ -74,14 +53,15 @@
 import axios from "axios";
 import { API_CONFIG } from '@/config/config'
 import { defineComponent, nextTick } from "vue";
-import { Chart, Grid, Line } from 'vue3-charts'
+import AnacChart from "./AnacChart.vue"
 
 export default defineComponent({
   name: "GraphicComponent",
-  components: { Chart, Grid, Line },
+  components: {
+    AnacChart
+  },
   data() {
     return {
-      graphicWidth: 800,
       errorMessage: "",
       anoInicio: "",
       mesInicio: "",
@@ -94,40 +74,7 @@ export default defineComponent({
       chartData: [],
       teste: [],
       hash: null,
-      direction: 'horizontal',
-      margin: {
-        left: 0,
-        top: 20,
-        right: 20,
-        bottom: 0
-      },
-      axis: {
-        primary: {
-          type: 'band',
-          format: (val) => val
-        },
-        secondary: {
-          domain: ['dataMin', 'dataMax + 100'],
-          type: 'linear',
-          ticks: 8
-        }
-      }
     };
-  },
-  watch: {
-    qtdVoos(newValue, oldValue) {
-      let newCont = Math.trunc( newValue / 30 );
-      if (newCont >= 1) {
-        console.log(newCont)
-        this.graphicWidth = this.graphicWidth + 400
-      }
-      if (oldValue > newValue) {
-        this.graphicWidth = this.graphicWidth - 400
-      }
-      if (newValue <= 10) {
-        this.graphicWidth = 800
-      }
-    }
   },
   mounted() {
     this.hash = localStorage.getItem("hash")
