@@ -97,15 +97,15 @@ def get_table_anac_filtered():
 	page = request.args.get('page', default=1, type=int)
 
 	# Validate market
-	if mercado and not re.fullmatch(r'^[A-Za-z0-9]{8}$', mercado):
+	if not re.fullmatch(r'^[A-Za-z0-9]{8}$', mercado):
 		return jsonify({"error": "Market must be a string with 8 alphanumeric characters."}), 400
 
 	# Validate years
-	if (ano_inicio and not re.fullmatch(r'^\d{4}$', ano_inicio)) or (ano_fim and not re.fullmatch(r'^\d{4}$', ano_fim)):
+	if (not re.fullmatch(r'^\d{4}$', ano_inicio)) or (not re.fullmatch(r'^\d{4}$', ano_fim)):
 		return jsonify({"error": "Years must be strings with four digits."}), 400
 
 	# Validate months (accepting values from 1 to 12 with or without leading zero)
-	if (mes_inicio and not re.fullmatch(r'^(0?[1-9]|1[0-2])$', mes_inicio)) or (mes_fim and not re.fullmatch(r'^(0?[1-9]|1[0-2])$', mes_fim)):
+	if (not re.fullmatch(r'^(0?[1-9]|1[0-2])$', mes_inicio)) or (not re.fullmatch(r'^(0?[1-9]|1[0-2])$', mes_fim)):
 		return jsonify({"error": "Months must be numbers between 1 and 12."}), 400
 
 	# Validate date range
