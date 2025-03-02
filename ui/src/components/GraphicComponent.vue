@@ -36,7 +36,7 @@
       <AnacChart :chartData="chartData" />
     </div>
 
-    <div style="margin-left: 1500px">
+    <div>
       Page:
       <button style="margin-left: 10px" @click="goToLeft">⬅️</button>
       <button style="margin-left: 10px; margin-right: 50px" @click="goToRight">➡️</button>
