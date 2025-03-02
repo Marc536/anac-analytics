@@ -21,7 +21,7 @@
       </div>
       <input v-model="mercado" type="text" placeholder="Mercado" maxlength="8" class="custom-input-market" />
       <div>
-        <button @click="fetchData">Buscar</button>
+        <button @click="fetchData(true)">Buscar</button>
       </div>
 
       <br>
@@ -72,7 +72,6 @@ export default defineComponent({
       page: 1,
       totalPage: 2,
       chartData: [],
-      teste: [],
       hash: null,
     };
   },
@@ -122,7 +121,14 @@ export default defineComponent({
           headers: { Authorization: this.hash }
         })
     },
-    fetchData() {
+    fetchData(clean = false) {
+      if(clean){
+        this.errorMessage = ""
+        this.qtdVoos = 10
+        this.page = 1
+        this.totalPage = 2
+        this.chartData = []
+      }
       this.getTableAnacFiltered()
       .then((response) => {
         if (response.status === 200) {
