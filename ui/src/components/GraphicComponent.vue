@@ -1,5 +1,16 @@
 <template>
   <div class="graphic-container">
+
+    <v-dialog v-model="errorDialog" max-width="400px">
+      <v-card>
+        <v-card-title class="error-title">Erro</v-card-title>
+        <v-card-text>{{ errorMessage }}</v-card-text>
+        <v-card-actions>
+          <v-btn color="red darken-3" text @click="errorDialog = false">OK</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <div class="filters">
       <div>
         RANGE DE DATAS DE VOO
@@ -26,7 +37,6 @@
 
       <br>
       <br>
-      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
       <div>
         Gráfico RPK
       </div>
@@ -54,15 +64,30 @@ import axios from "axios";
 import { API_CONFIG } from '@/config/config'
 import { defineComponent, nextTick } from "vue";
 import AnacChart from "./AnacChart.vue"
+import { 
+  VDialog, 
+  VCard, 
+  VCardTitle, 
+  VCardText, 
+  VCardActions, 
+  VBtn 
+} from 'vuetify/components';
 
 export default defineComponent({
   name: "GraphicComponent",
   components: {
-    AnacChart
+  AnacChart,
+  VDialog,
+  VCard,
+  VCardTitle,
+  VCardText,
+  VCardActions,
+  VBtn
   },
   data() {
     return {
       errorMessage: "",
+      errorDialog: false,
       anoInicio: "",
       mesInicio: "",
       anoFim: "",
@@ -82,6 +107,10 @@ export default defineComponent({
     }
   },
   methods: {
+    showError(message) {
+      this.errorMessage = message
+      this.errorDialog = true
+    },
     goToLeft() {
       if (this.page >= 2) {
         this.page = this.page - 1
@@ -146,12 +175,12 @@ export default defineComponent({
             });
           });
         } else {
-          this.errorMessage = 'Entrada inválida. Verifique os campos e tente novamente.';
+          this.showError('Entrada inválida. Verifique os campos e tente novamente.')
         }
       })
       .catch((error) => {
         console.log(error);
-        this.errorMessage = 'Entrada inválida. Verifique os campos e tente novamente.';
+        this.showError('Entrada inválida. Verifique os campos e tente novamente.')
       });
     },
     goToLogin() {
@@ -163,6 +192,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.error-title {
+  background-color: #d32f2f;
+  color: white;
+  padding: 10px;
+  font-size: 18px;
+}
 .graphic-container {
   text-align: center;
   padding: 20px;
