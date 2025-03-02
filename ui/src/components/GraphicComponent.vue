@@ -38,7 +38,7 @@
       <br>
       <br>
       <div>
-        Gráfico RPK
+        RPK por Data
       </div>
     </div>
 
@@ -47,7 +47,7 @@
     </div>
 
     <div>
-      Page:
+      Datas:
       <button style="margin-left: 10px" @click="goToLeft">⬅️</button>
       <button style="margin-left: 10px; margin-right: 50px" @click="goToRight">➡️</button>
       Zoom:
@@ -55,7 +55,7 @@
       <button style="margin-left: 10px" @click="goToDown">➕</button>
     </div>
 
-    <button @click="goToLogin" class="logout-button">Logout</button>
+    <button @click="goToLogin" class="logout-button">Sair</button>
   </div>
 </template>
 
