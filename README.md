@@ -23,8 +23,8 @@ O projeto está dividido em três containers Docker:
 A aplicação pode ser acessada de duas formas:
 
 1. **Via VM no Google Cloud Platform (GCP):**
-   - **Endereço IP:** `34.30.225.223`
-   - **Frontend (Vue.js):** `http://34.30.225.223:8080/`
+   - **Endereço IP:** `35.193.230.216`
+   - **Frontend (Vue.js):** `http://35.193.230.216:8080/`
    - **Backend Flask:** Porta `5000`
 
 2. **Via ngrok (caso a VM esteja indisponível):**
