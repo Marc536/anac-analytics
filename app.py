@@ -24,7 +24,7 @@ def get_db_manager():
 def hash_check(headers):
 	status = None
 	hash = headers.get('Authorization')
-	if not hash or not db_manager.verify_hash(hash):
+	if not hash or not get_db_manager().verify_hash(hash):
 		status = jsonify({"error": "Invalid or missing hash."}), 401
 	return status
 
@@ -39,7 +39,7 @@ def login():
 	name = data['name']
 	password = data['password']
 
-	hash = db_manager.verify_user_password(name, password)
+	hash = get_db_manager().verify_user_password(name, password)
 	if hash:
 		return jsonify({"hash": hash}), 200
 	else:
@@ -116,7 +116,7 @@ def get_table_anac_filtered():
 			return jsonify({"error": "If start and end year are the same, end month cannot be less than start month."}), 400
 
 	try:
-		results, total_pages, current_page = db_manager.get_filtered_anac_range(
+		results, total_pages, current_page = get_db_manager().get_filtered_anac_range(
 			ano_inicio, 
 			mes_inicio, 
 			ano_fim, 
