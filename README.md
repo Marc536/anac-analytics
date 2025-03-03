@@ -111,7 +111,7 @@ Este projeto foi desenvolvido para demonstrar habilidades no uso de Flask, Vue.j
 
 ### **Nota Adicional - Tabelas no PostgreSQL**
 
-Após rodar a aplicação, é necessário criar as seguintes tabelas manualmente no banco de dados PostgreSQL usando o **pgAdmin** ou o comando **psql** (dentro do banco de dados ANAC):
+Após rodar a aplicação, é necessário criar as seguintes tabelas manualmente no banco de dados PostgreSQL usando o **pgAdmin** ou o comando **psql** (precisa acessar o banco de dados ANAC):
 
 1. **Tabela ANAC**
 
