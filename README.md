@@ -18,19 +18,6 @@ O projeto está dividido em três containers Docker:
 2. **Banco de Dados (PostgreSQL):** Armazena os dados filtrados da ANAC.
 3. **Frontend (Vue.js):** Interface do usuário.
 
-## Endereços e Portas
-
-A aplicação pode ser acessada de duas formas:
-
-1. **Via VM no Google Cloud Platform (GCP):**
-   - **Endereço IP:** `35.193.230.216`
-   - **Frontend (Vue.js):** `http://35.193.230.216:8080/`
-   - **Backend Flask:** Porta `5000`
-
-2. **Via ngrok (caso a VM esteja indisponível):**
-   - **URL:** [https://anac.ngrok.app](https://anac.ngrok.app)
-   - **Observação:** Este link só estará disponível durante o horário comercial.
-
 ## Rotas da API
 
 A API possui os seguintes endpoints:
